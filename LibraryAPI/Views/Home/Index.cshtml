@@ -1,0 +1,221 @@
+﻿@section scripts {
+    @Scripts.Render("~/bundles/app")
+}
+
+
+<div class="page-header">
+    <div class="jumbotron" >
+        <h1 style="text-align:center">LIBRERIA</h1>
+    </div>
+</div>
+
+
+<h1 style="text-align:center">LIBROS</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">LIBROS</h2>
+            </div>
+            <div class="panel-body">
+                <div data-bind="visible: loading" class="alert alert-info" role="alert">Cargando...</div>
+                <ul class="list-unstyled" data-bind="foreach: books">
+                    <li class="list-group-item">
+                        <strong><span data-bind="text: autorName"></span></strong>  <span data-bind="text: titulo"></span>
+                        <small><a href="#" data-bind="click: $parent.getBookDetail">Detalles</a></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="alert alert-danger" data-bind="visible: error"><p data-bind="text: error"></p></div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Detalles Libros</h2>
+            </div>
+            <table class="table">
+                <tr><td><strong>Titulo</strong></td><td data-bind="text: detail().titulo"></td></tr>
+                <tr><td><strong>Autor</strong></td><td data-bind="text: detail().autorName"></td></tr>
+                <tr><td><strong>Año</strong></td><td data-bind="text: detail().año"></td></tr>
+                <tr><td><strong>Categoria</strong></td><td data-bind="text: detail().categoriaNombre"></td></tr>
+                <tr><td><strong>Precio</strong></td><td data-bind="text: detail().precio"></td></tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Agregar Libros</h2>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" data-bind="submit: addBook">
+                    <div class="form-group">
+                        <label for="inputAutor" class="col-sm-2 control-label">Autor</label>
+                        <div class="col-sm-10">
+                            <select data-bind="options: autores, optionsText: 'name', value: newBook.Autor"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputCategoria" class="col-sm-2 control-label">Autor</label>
+                        <div class="col-sm-10">
+                            <select data-bind="options: categorias, optionsText: 'name', value: newBook.Categoria"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" data-bind="with: newBook">
+                        <label for="inputTitulo" class="col-sm-2 control-label">Titulo</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTitulo" data-bind="value:titulo" />
+                        </div>
+
+                        <label for="inputAño" class="col-sm-2 control-label">Año</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputAño" data-bind="value:año" />
+                        </div>
+
+                        <label for="inputPrecio" class="col-sm-2 control-label">Precio</label>
+                        <div class="col-sm-10">
+                            <input type="number" step="any" class="form-control" id="inputPrecio" data-bind="value: precio" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<h1 style="text-align:center">AUTORES</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">AUTORES</h2>
+            </div>
+            <div class="panel-body">
+                <div data-bind="visible: loadingA" class="alert alert-info" role="alert">Cargando...</div>
+                <ul class="list-unstyled" data-bind="foreach: autores">
+                    <li class="list-group-item">
+                        <strong><span data-bind="text: name"></span> <span data-bind="text: año"></span></strong>
+                        <small><a href="#" data-bind="click: $parent.getAutorDetail">Detalle</a></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="alert alert-danger" data-bind="visible: error"><p data-bind="text: error"></p></div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Detalles Autores</h2>
+            </div>
+            <table class="table">
+                <tr><td><strong>Nombre:</strong></td><td data-bind="text: detailAutor().name"></td></tr>
+                <tr><td><strong>Año</strong></td><td data-bind="text: detailAutor().año"></td></tr>
+                <tr><td><strong>Biografia</strong></td><td data-bind="text: detailAutor().bio"></td></tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Agregar Autor</h2>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" data-bind="submit: addAutor">
+                    <div class="form-group" data-bind="with: newAutor">
+                        <label for="inputNombre" class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNombre" data-bind="value:nombre" />
+                        </div>
+
+                        <label for="inputAño" class="col-sm-2 control-label">Año</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputAño" data-bind="value:año" />
+                        </div>
+
+                        <label for="inputBio" class="col-sm-2 control-label">Biografia</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputBio" data-bind="value: bio" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h1 style="text-align:center">CATEGORIAS</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">CATEGORIAS</h2>
+            </div>
+            <div class="panel-body">
+                <div data-bind="visible: loadingC"  class="alert alert-info" role="alert">Cargando...</div>
+                <ul class="list-unstyled" data-bind="foreach: categorias">
+                    <li class="list-group-item">
+                        <strong><span data-bind="text: name"></span></strong>-  <span data-bind="text: name"></span>
+                        <small><a href="#" data-bind="click: $parent.getCategoriaDetail">Detalles</a></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="alert alert-danger" data-bind="visible: error"><p data-bind="text: error"></p></div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Detalles Categorias</h2>
+            </div>
+            <table class="table">
+                <tr><td><strong>Nombre</strong></td><td data-bind="text: detailCat().name"></td></tr>
+                <tr><td><strong>Descripcion</strong></td><td data-bind="text: detailCat().descripcion"></td></tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Agregar Categoria</h2>
+            </div>
+
+            <div class="panel-body">
+                <form class="form-horizontal" data-bind="submit: addCategoria">
+                    <div class="form-group" data-bind="with: newCategoria">
+                        <label for="inputNombre" class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNombre" data-bind="value: nombre" />
+                        </div>
+
+                        <label for="inputDescripcion" class="col-sm-2 control-label">Descripcion</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDescripcion" data-bind="value: descripcion" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
